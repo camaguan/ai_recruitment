@@ -18,6 +18,20 @@ export default function UploadCvForm({ jobId }: UploadCvFormProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // AÑADE ESTO para ver qué está pasando
+        console.log("DEBUG - Valores antes del insert:");
+        console.log("jobId:", jobId);
+        console.log("file:", file);
+        console.log("name:", name);
+        console.log("email:", email);
+
+        // Guardaespaldas: Detener si no hay jobId
+        if (!jobId) {
+            alert("Error: No se ha detectado la vacante (jobId es nulo).");
+            return;
+        }
+
         if (!file || !name || !email) return;
 
         setStatus("loading");
@@ -36,7 +50,10 @@ export default function UploadCvForm({ jobId }: UploadCvFormProps) {
                     upsert: false,
                 });
 
-            if (uploadError) throw new Error("Error al subir el archivo PDF.");
+            if (uploadError) {
+                console.error("Error completo de Supabase:", uploadError);
+                throw new Error(uploadError.message);
+            }
 
             // 3. Obtener la URL pública del archivo
             const { data: { publicUrl } } = supabase.storage
@@ -67,7 +84,10 @@ export default function UploadCvForm({ jobId }: UploadCvFormProps) {
                     stage: "cv_received"
                 }]);
 
-            if (applicationError) throw new Error("Error al crear la postulación.");
+            if (applicationError) {
+                console.error("Error técnico de Supabase en aplicaciones:", applicationError);
+                throw new Error(`Error en aplicaciones: ${applicationError.message}`);
+            }
 
             // Todo salió bien
             setStatus("success");
@@ -81,55 +101,55 @@ export default function UploadCvForm({ jobId }: UploadCvFormProps) {
 
     if (status === "success") {
         return (
-            <div className="p-6 bg-green-50 text-green-800 rounded-lg border border-green-200">
+            <div className="p-6 bg-green-950/30 text-green-300 rounded-lg border border-green-900/50 transition-colors">
                 <h3 className="font-semibold text-lg">¡Postulación exitosa!</h3>
-                <p className="mt-2 text-sm">Hemos recibido tu CV. Te notificaremos por correo los siguientes pasos.</p>
+                <p className="mt-2 text-sm text-green-400/90">Hemos recibido tu CV. Te notificaremos por correo los siguientes pasos.</p>
             </div>
         );
     }
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-5 max-w-md bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+        <form onSubmit={handleSubmit} className="space-y-5 w-full max-w-md bg-zinc-900 p-6 rounded-xl border border-zinc-800 shadow-xl transition-colors">
             <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nombre completo</label>
+                <label htmlFor="name" className="block text-sm font-medium text-zinc-300">Nombre completo</label>
                 <input
                     id="name"
                     type="text"
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+                    className="mt-1 block w-full rounded-md border-zinc-700 bg-zinc-800 text-zinc-100 placeholder-zinc-500 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border focus:outline-none"
                     placeholder="Ej: Ana Pérez"
                 />
             </div>
 
             <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Correo electrónico</label>
+                <label htmlFor="email" className="block text-sm font-medium text-zinc-300">Correo electrónico</label>
                 <input
                     id="email"
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border"
+                    className="mt-1 block w-full rounded-md border-zinc-700 bg-zinc-800 text-zinc-100 placeholder-zinc-500 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border focus:outline-none"
                     placeholder="ana@ejemplo.com"
                 />
             </div>
 
             <div>
-                <label htmlFor="cv" className="block text-sm font-medium text-gray-700">Curriculum (PDF)</label>
+                <label htmlFor="cv" className="block text-sm font-medium text-zinc-300">Curriculum (PDF)</label>
                 <input
                     id="cv"
                     type="file"
                     accept="application/pdf"
                     required
                     onChange={(e) => setFile(e.target.files?.[0] || null)}
-                    className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"
+                    className="mt-1 block w-full text-sm text-zinc-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-900/30 file:text-blue-400 hover:file:bg-blue-900/50 cursor-pointer focus:outline-none"
                 />
             </div>
 
             {status === "error" && (
-                <div className="text-red-600 text-sm bg-red-50 p-3 rounded-md border border-red-200">
+                <div className="text-red-400 text-sm bg-red-950/30 p-3 rounded-md border border-red-900/50">
                     {errorMessage}
                 </div>
             )}
