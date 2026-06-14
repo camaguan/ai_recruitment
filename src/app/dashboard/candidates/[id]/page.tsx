@@ -79,8 +79,8 @@ export default async function CandidateDetail({ params }: { params: Promise<{ id
                                         <p className="mt-1 font-medium text-zinc-100">{aiData.classification}</p>
                                     </div>
                                     <div className={`p-4 rounded-lg border transition-colors ${aiData.riskLevel === 'High' ? 'bg-red-950/20 border-red-900/30 text-red-300' :
-                                            aiData.riskLevel === 'Medium' ? 'bg-yellow-950/20 border-yellow-900/30 text-yellow-300' :
-                                                'bg-green-950/20 border-green-900/30 text-green-300'
+                                        aiData.riskLevel === 'Medium' ? 'bg-yellow-950/20 border-yellow-900/30 text-yellow-300' :
+                                            'bg-green-950/20 border-green-900/30 text-green-300'
                                         }`}>
                                         <h3 className="text-sm font-semibold opacity-85">Nivel de Riesgo</h3>
                                         <p className="mt-1 font-bold">{aiData.riskLevel}</p>
@@ -109,9 +109,9 @@ export default async function CandidateDetail({ params }: { params: Promise<{ id
                     <h2 className="text-xl font-semibold text-zinc-50 mb-4">CV Original</h2>
                     {candidate?.cv_pdf_url ? (
                         <iframe
-                             src={`${candidate.cv_pdf_url}#view=FitH`}
-                             className="w-full flex-1 min-h-[500px] border border-zinc-800 rounded-lg bg-zinc-950"
-                             title="CV PDF"
+                            src={`${candidate.cv_pdf_url}#view=FitH`}
+                            className="w-full flex-1 min-h-[500px] border border-zinc-800 rounded-lg bg-zinc-950"
+                            title="CV PDF"
                         />
                     ) : (
                         <p className="text-zinc-500 italic">No se adjuntó PDF.</p>

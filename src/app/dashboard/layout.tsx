@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase/client";
+import Logo from "@/components/ui/Logo";
 
 export default function DashboardLayout({
     children,
@@ -9,6 +11,7 @@ export default function DashboardLayout({
     children: React.ReactNode;
 }) {
     const pathname = usePathname();
+    const router = useRouter();
 
     const getLinkClass = (href: string) => {
         const isActive = pathname === href;
@@ -19,15 +22,20 @@ export default function DashboardLayout({
         }`;
     };
 
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+        // Clear cookie
+        document.cookie = "sb-access-token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax; Secure";
+        router.push("/login");
+    };
+
     return (
         <div className="min-h-screen bg-zinc-950 flex text-zinc-50">
             {/* Sidebar de Navegación */}
             <aside className="w-64 bg-zinc-900 border-r border-zinc-800 text-white flex flex-col">
                 <div className="p-6">
-                    <h2 className="text-2xl font-bold tracking-tight text-blue-400">
-                        AI<span className="text-zinc-50">Recruit</span>
-                    </h2>
-                    <p className="text-xs text-zinc-500 mt-1">Hiring Dashboard</p>
+                    <Logo iconSize={32} textSize="text-2xl" />
+                    <p className="text-xs text-zinc-500 mt-1 pl-10">Hiring Dashboard</p>
                 </div>
 
                 <nav className="flex-1 px-4 space-y-2 mt-4">
@@ -64,7 +72,12 @@ export default function DashboardLayout({
                         </div>
                         <div className="text-sm">
                             <p className="font-medium text-zinc-200">Recruiter</p>
-                            <button className="text-xs text-zinc-500 hover:text-zinc-300">Cerrar sesión</button>
+                            <button 
+                                onClick={handleLogout}
+                                className="text-xs text-zinc-500 hover:text-zinc-300 cursor-pointer"
+                            >
+                                Cerrar sesión
+                            </button>
                         </div>
                     </div>
                 </div>
