@@ -19,145 +19,220 @@ export default function Home() {
         setLoading(false);
     };
 
-    useEffect(() => {
-        fetchJobs();
-    }, []);
+    useEffect(() => { fetchJobs(); }, []);
 
     const handleScrollToVacancies = (e: React.MouseEvent) => {
         e.preventDefault();
-        const element = document.getElementById("vacancies");
-        if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
-        }
+        document.getElementById("vacancies")?.scrollIntoView({ behavior: "smooth" });
     };
 
     return (
-        <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans select-none selection:bg-blue-600 selection:text-white">
-            {/* Header / Navbar */}
-            <header className="sticky top-0 z-50 backdrop-blur-md bg-zinc-950/80 border-b border-zinc-900/80 px-6 py-4">
+        <div className="min-h-screen bg-white text-black flex flex-col">
+
+            {/* ── Header ── */}
+            <header className="sticky top-0 z-50 bg-white border-b-2 border-black px-6 py-4">
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
-                    <Logo iconSize={32} textSize="text-2xl" />
+                    <Logo iconSize={32} textSize="text-2xl" variant="light" />
                     <Link
                         href="/login"
-                        className="px-4 py-2 text-sm font-medium border border-zinc-800 rounded-lg hover:bg-zinc-900 hover:text-white transition-all duration-200"
+                        className="px-5 py-2.5 text-[10px] font-black uppercase tracking-widest border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-150"
                     >
                         Ingresar como Reclutador
                     </Link>
                 </div>
             </header>
 
-            {/* Hero Section */}
-            <section className="relative overflow-hidden py-24 px-6 border-b border-zinc-900 bg-radial-[circle_at_top] from-blue-950/25 via-transparent to-transparent">
-                <div className="max-w-4xl mx-auto text-center space-y-8">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-400 text-xs font-semibold uppercase tracking-wider">
-                        🎯 Selección de Talento de Próxima Generación
-                    </div>
-                    <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
-                        Encuentra tu próximo desafío con e-Selector
-                    </h1>
-                    <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto font-light leading-relaxed">
-                        e-Selector agiliza los procesos de contratación. Analizamos tu currículum para vincularte a la vacante ideal en minutos, con rapidez y objetividad.
-                    </p>
-                    <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <a
-                            href="#vacancies"
-                            onClick={handleScrollToVacancies}
-                            className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/10 active:scale-[0.98] transition-all duration-200 cursor-pointer"
-                        >
-                            Ver Vacantes Disponibles
-                        </a>
+            {/* ── Hero ── */}
+            <section className="relative border-b-2 border-black bg-[#F2F2F2] swiss-grid-pattern overflow-hidden">
+                <div className="max-w-7xl mx-auto px-6 py-24 md:py-36">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+
+                        {/* Copy */}
+                        <div className="md:col-span-8 space-y-6">
+                            <div className="flex items-center gap-3">
+                                <span
+                                    className="text-[10px] font-black uppercase tracking-[0.2em]"
+                                    style={{ color: "#FF3000" }}
+                                >
+                                    01. Portal de Empleo
+                                </span>
+                                <div className="h-px w-12 bg-black/20" />
+                            </div>
+
+                            <h1 className="text-6xl md:text-8xl lg:text-[7.5rem] font-black uppercase tracking-tighter leading-[0.88] text-black">
+                                Encuentra<br />
+                                tu próximo<br />
+                                <span style={{ color: "#FF3000" }}>desafío.</span>
+                            </h1>
+
+                            <p className="text-base md:text-lg text-black/55 max-w-lg leading-relaxed font-medium">
+                                e-Selector conecta candidatos con las mejores vacantes.
+                                Proceso objetivo, ágil y completamente transparente.
+                            </p>
+
+                            <div className="pt-2">
+                                <a
+                                    href="#vacancies"
+                                    onClick={handleScrollToVacancies}
+                                    className="inline-flex items-center gap-3 px-8 py-4 bg-black text-white text-xs font-black uppercase tracking-widest hover:bg-[#FF3000] transition-colors duration-150"
+                                >
+                                    Ver Vacantes Disponibles
+                                    <span className="text-base leading-none">→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Bauhaus composition */}
+                        <div className="hidden md:flex md:col-span-4 items-end justify-end h-full">
+                            <div className="relative w-56 h-56">
+                                <div className="absolute inset-0 border-2 border-black" />
+                                <div className="absolute top-5 left-5 right-0 bottom-0 border-2 border-black swiss-dots" />
+                                <div
+                                    className="absolute top-10 left-10 w-20 h-20"
+                                    style={{ backgroundColor: "#FF3000" }}
+                                />
+                                <div className="absolute bottom-5 right-5 w-10 h-10 border-2 border-black bg-white" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Business Value Features Section */}
-            <section className="py-20 px-6 max-w-7xl mx-auto w-full border-b border-zinc-900">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="bg-zinc-900/30 p-8 rounded-2xl border border-zinc-900 space-y-4">
-                        <div className="text-3xl text-blue-500">⚡</div>
-                        <h3 className="text-xl font-bold text-white">Análisis en Segundos</h3>
-                        <p className="text-sm text-zinc-400 leading-relaxed">
-                            Extracción automática de habilidades, experiencia y fortalezas clave directamente de tu archivo PDF en tiempo real, sin formularios complicados.
-                        </p>
-                    </div>
-
-                    <div className="bg-zinc-900/30 p-8 rounded-2xl border border-zinc-900 space-y-4">
-                        <div className="text-3xl text-blue-500">🎯</div>
-                        <h3 className="text-xl font-bold text-white">Match Objetivo</h3>
-                        <p className="text-sm text-zinc-400 leading-relaxed">
-                            Calculamos un índice de compatibilidad objetivo con los requerimientos de la vacante, facilitando el trabajo de los reclutadores y garantizando transparencia.
-                        </p>
-                    </div>
-
-                    <div className="bg-zinc-900/30 p-8 rounded-2xl border border-zinc-900 space-y-4">
-                        <div className="text-3xl text-blue-500">⚖️</div>
-                        <h3 className="text-xl font-bold text-white">Decisión Humana</h3>
-                        <p className="text-sm text-zinc-400 leading-relaxed">
-                            e-Selector entrega información organizada y comparativa, pero todas las contrataciones son validadas por el equipo de reclutamiento (Human-in-the-loop).
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            {/* Public Vacancies Section */}
-            <section id="vacancies" className="flex-1 py-20 px-6 max-w-7xl mx-auto w-full space-y-10">
-                <div className="text-center space-y-2">
-                    <h2 className="text-3xl font-bold tracking-tight text-white">
-                        Oportunidades Disponibles
-                    </h2>
-                    <p className="text-sm text-zinc-400">
-                        Selecciona una vacante activa para aplicar e iniciar el proceso
-                    </p>
-                </div>
-
-                {loading ? (
-                    <div className="flex justify-center items-center py-20">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-                    </div>
-                ) : jobs.length === 0 ? (
-                    <div className="text-center py-20 bg-zinc-900/30 rounded-2xl border border-zinc-900 p-8">
-                        <p className="text-zinc-500 italic">No hay vacantes disponibles en este momento.</p>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {jobs.map((job) => (
+            {/* ── Features ── */}
+            <section className="border-b-2 border-black">
+                <div className="max-w-7xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-3">
+                        {[
+                            {
+                                num: "01",
+                                title: "Análisis en Segundos",
+                                body: "Extraemos habilidades, experiencia y fortalezas directamente de tu CV en tiempo real, sin formularios complicados.",
+                            },
+                            {
+                                num: "02",
+                                title: "Match Objetivo",
+                                body: "Calculamos un índice de compatibilidad con los requisitos de la vacante, garantizando transparencia en cada paso.",
+                            },
+                            {
+                                num: "03",
+                                title: "Decisión Humana",
+                                body: "e-Selector entrega información organizada. Todas las contrataciones son validadas por el equipo de reclutamiento.",
+                            },
+                        ].map((f, i) => (
                             <div
-                                key={job.id}
-                                className="group relative bg-zinc-900/50 p-6 rounded-2xl border border-zinc-900 shadow-xl flex flex-col justify-between transition-all duration-300 hover:border-zinc-800 hover:-translate-y-1 hover:bg-zinc-900"
+                                key={f.num}
+                                className={`p-10 group hover:bg-black transition-colors duration-150 cursor-default ${
+                                    i < 2 ? "border-r-2 border-black" : ""
+                                }`}
                             >
-                                <div className="space-y-4">
-                                    <div className="flex items-start justify-between">
-                                        <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
-                                            {job.title}
-                                        </h3>
-                                        <span className="px-2.5 py-1 bg-zinc-800 border border-zinc-700 text-xs font-semibold rounded-md text-zinc-300">
-                                            {job.seniority_required}
-                                        </span>
-                                    </div>
-                                    <p className="text-sm text-zinc-400 line-clamp-3 leading-relaxed">
-                                        {job.description}
-                                    </p>
-                                </div>
-                                <div className="mt-6 pt-4 border-t border-zinc-800/80 flex items-center justify-between">
-                                    <span className="text-xs text-zinc-650">Vacante Abierta</span>
-                                    <Link
-                                        href={`/apply/${job.id}`}
-                                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors cursor-pointer"
-                                    >
-                                        Postularse <span>→</span>
-                                    </Link>
-                                </div>
+                                <span
+                                    className="text-[10px] font-black uppercase tracking-[0.2em] group-hover:text-[#FF3000] transition-colors"
+                                    style={{ color: "#FF3000" }}
+                                >
+                                    {f.num}.
+                                </span>
+                                <h3 className="mt-3 text-lg font-black uppercase tracking-tight text-black group-hover:text-white transition-colors">
+                                    {f.title}
+                                </h3>
+                                <p className="mt-2 text-sm text-black/55 leading-relaxed font-medium group-hover:text-white/60 transition-colors">
+                                    {f.body}
+                                </p>
                             </div>
                         ))}
                     </div>
-                )}
+                </div>
             </section>
 
-            {/* Footer */}
-            <footer className="border-t border-zinc-900 py-10 px-6">
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-600">
-                    <p>© {new Date().getFullYear()} e-Selector. Todos los derechos reservados.</p>
-                    <p>Potenciado por Next.js y Supabase</p>
+            {/* ── Vacancies ── */}
+            <section id="vacancies" className="flex-1 py-20 px-6 bg-white">
+                <div className="max-w-7xl mx-auto space-y-8">
+
+                    {/* Section header */}
+                    <div className="flex items-end justify-between border-b-2 border-black pb-6">
+                        <div>
+                            <span
+                                className="text-[10px] font-black uppercase tracking-[0.2em] block mb-2"
+                                style={{ color: "#FF3000" }}
+                            >
+                                02. Oportunidades
+                            </span>
+                            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-black leading-none">
+                                Vacantes Disponibles
+                            </h2>
+                        </div>
+                        {!loading && (
+                            <span className="text-xs font-black uppercase tracking-widest text-black/30">
+                                {jobs.length} activa{jobs.length !== 1 ? "s" : ""}
+                            </span>
+                        )}
+                    </div>
+
+                    {/* States */}
+                    {loading ? (
+                        <div className="flex items-center justify-center py-20">
+                            <div
+                                className="w-8 h-8 border-2 border-black border-t-transparent animate-spin"
+                                style={{ borderTopColor: "#FF3000" }}
+                            />
+                        </div>
+                    ) : jobs.length === 0 ? (
+                        <div className="py-20 text-center border-2 border-black bg-[#F2F2F2] swiss-dots">
+                            <p className="text-xs font-black uppercase tracking-widest text-black/30">
+                                No hay vacantes disponibles en este momento.
+                            </p>
+                        </div>
+                    ) : (
+                        /* Grid: shared left + top borders, each cell brings right + bottom */
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-l-2 border-t-2 border-black">
+                            {jobs.map((job) => (
+                                <div
+                                    key={job.id}
+                                    className="group border-r-2 border-b-2 border-black p-8 flex flex-col justify-between min-h-[200px] hover:bg-black transition-colors duration-150"
+                                >
+                                    <div className="space-y-3">
+                                        <div className="flex items-start justify-between gap-3">
+                                            <h3 className="text-base font-black uppercase tracking-tight text-black group-hover:text-white transition-colors leading-tight">
+                                                {job.title}
+                                            </h3>
+                                            <span className="shrink-0 text-[9px] font-black uppercase tracking-widest px-2 py-0.5 border border-black text-black group-hover:border-white group-hover:text-white transition-colors">
+                                                {job.seniority_required}
+                                            </span>
+                                        </div>
+                                        <p className="text-xs text-black/50 group-hover:text-white/55 leading-relaxed font-medium transition-colors line-clamp-3">
+                                            {job.description}
+                                        </p>
+                                    </div>
+
+                                    <div className="mt-6 pt-4 border-t border-black/15 group-hover:border-white/15 flex items-center justify-between transition-colors">
+                                        <span className="text-[9px] font-black uppercase tracking-[0.2em] text-black/25 group-hover:text-white/25 transition-colors">
+                                            Vacante Abierta
+                                        </span>
+                                        <Link
+                                            href={`/apply/${job.id}`}
+                                            className="text-[10px] font-black uppercase tracking-widest text-black group-hover:text-white flex items-center gap-1.5 transition-colors"
+                                        >
+                                            Postularse <span>→</span>
+                                        </Link>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </section>
+
+            {/* ── Footer ── */}
+            <footer className="border-t-2 border-black px-6 py-8 bg-white">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <Logo iconSize={22} textSize="text-sm" variant="light" />
+                    <div className="text-right">
+                        <p className="text-[9px] font-black uppercase tracking-widest text-black/35">
+                            © {new Date().getFullYear()} e-Selector. Todos los derechos reservados.
+                        </p>
+                        <p className="text-[9px] text-black/25 mt-0.5 uppercase tracking-wider">
+                            Potenciado por Next.js y Supabase
+                        </p>
+                    </div>
                 </div>
             </footer>
         </div>

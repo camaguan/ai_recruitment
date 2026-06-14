@@ -14,7 +14,7 @@ type PendingAction = {
     label: string;
     description: string;
     confirmLabel: string;
-    confirmClass: string;
+    confirmStyle: string;
 } | null;
 
 export default function CandidateActions({ applicationId, currentStage }: CandidateActionsProps) {
@@ -23,26 +23,24 @@ export default function CandidateActions({ applicationId, currentStage }: Candid
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
 
-    if (currentStage === "rejected" || currentStage === "hired") {
-        return null;
-    }
+    if (currentStage === "rejected" || currentStage === "hired") return null;
 
     const requestAction = (stage: string) => {
         if (stage === "rejected") {
             setPendingAction({
                 stage,
-                label: "Descartar candidato",
-                description: "Esta acción moverá al candidato al estado de descartado. No podrás revertirlo desde esta pantalla.",
-                confirmLabel: "Sí, descartar",
-                confirmClass: "bg-red-600 hover:bg-red-500 shadow-red-500/20",
+                label: "Descartar Candidato",
+                description: "Esta acción moverá al candidato al estado de descartado. El cambio es definitivo desde esta vista.",
+                confirmLabel: "Confirmar Descarte",
+                confirmStyle: "bg-[#FF3000] text-white hover:bg-red-700",
             });
         } else if (stage === "interview") {
             setPendingAction({
                 stage,
-                label: "Aprobar para entrevista",
-                description: "Se notificará al equipo que este candidato avanza a la etapa de entrevista.",
-                confirmLabel: "Sí, aprobar",
-                confirmClass: "bg-green-600 hover:bg-green-500 shadow-green-500/20",
+                label: "Aprobar para Entrevista",
+                description: "El candidato avanzará a la etapa de entrevista. El equipo será notificado.",
+                confirmLabel: "Confirmar Aprobación",
+                confirmStyle: "bg-white text-black hover:bg-[#FF3000] hover:text-white",
             });
         }
     };
@@ -58,7 +56,7 @@ export default function CandidateActions({ applicationId, currentStage }: Candid
             .eq("id", applicationId);
 
         if (dbError) {
-            setError("Error al actualizar el estado: " + dbError.message);
+            setError("Error al actualizar: " + dbError.message);
             setLoading(false);
             return;
         }
@@ -75,87 +73,97 @@ export default function CandidateActions({ applicationId, currentStage }: Candid
 
     return (
         <>
-            {/* Botones de acción */}
+            {/* ── Action buttons ── */}
             <div className="flex gap-3">
                 <button
+                    id="btn-discard"
                     onClick={() => requestAction("rejected")}
                     disabled={loading}
-                    className="px-4 py-2 text-sm font-medium text-red-400 bg-red-950/30 border border-red-900/50 rounded-lg hover:bg-red-950/60 hover:border-red-800 disabled:opacity-50 transition-all duration-200"
+                    className="px-5 py-2.5 text-[9px] font-black uppercase tracking-[0.2em] border border-white/20 text-white/50 hover:border-[#FF3000] hover:text-[#FF3000] disabled:opacity-40 transition-colors duration-150"
                 >
                     Descartar
                 </button>
-
                 <button
+                    id="btn-approve-interview"
                     onClick={() => requestAction("interview")}
                     disabled={loading}
-                    className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-500 disabled:opacity-50 transition-all duration-200 shadow-sm shadow-green-500/20"
+                    className="px-5 py-2.5 text-[9px] font-black uppercase tracking-[0.2em] bg-white text-black hover:bg-[#FF3000] hover:text-white disabled:opacity-40 transition-colors duration-150"
                 >
                     Aprobar para Entrevista
                 </button>
             </div>
 
-            {/* Modal de confirmación */}
+            {/* ── Confirmation modal ── */}
             {pendingAction && (
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center p-4"
                     role="dialog"
                     aria-modal="true"
-                    aria-labelledby="confirm-modal-title"
+                    aria-labelledby="confirm-title"
                 >
-                    {/* Backdrop */}
+                    {/* Backdrop — solid dark, no blur (Swiss flatness) */}
                     <div
-                        className="absolute inset-0 bg-zinc-950/80 backdrop-blur-sm"
+                        className="absolute inset-0 bg-black/75"
                         onClick={handleCancel}
                     />
 
                     {/* Panel */}
-                    <div className="relative w-full max-w-sm bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-6 space-y-5 animate-in fade-in zoom-in-95 duration-200">
-                        {/* Icono + Título */}
-                        <div className="flex items-start gap-4">
-                            <div className={`shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-lg ${
-                                pendingAction.stage === "rejected"
-                                    ? "bg-red-950/50 border border-red-900/60 text-red-400"
-                                    : "bg-green-950/50 border border-green-900/60 text-green-400"
-                            }`}>
-                                {pendingAction.stage === "rejected" ? "✕" : "✓"}
-                            </div>
-                            <div>
-                                <h3
-                                    id="confirm-modal-title"
-                                    className="text-base font-semibold text-white"
-                                >
-                                    {pendingAction.label}
-                                </h3>
-                                <p className="mt-1 text-sm text-zinc-400 leading-relaxed">
-                                    {pendingAction.description}
-                                </p>
-                            </div>
+                    <div className="relative w-full max-w-sm bg-[#0A0A0A] border-2 border-white/15 p-0">
+
+                        {/* Header */}
+                        <div className="border-b border-white/10 px-8 py-5 flex items-center justify-between">
+                            <span
+                                className="text-[9px] font-black uppercase tracking-[0.2em]"
+                                style={{ color: "#FF3000" }}
+                            >
+                                Confirmar Acción
+                            </span>
+                            <button
+                                onClick={handleCancel}
+                                className="text-white/30 hover:text-white transition-colors text-lg leading-none font-black"
+                                aria-label="Cancelar"
+                            >
+                                ×
+                            </button>
                         </div>
 
-                        {/* Error inline */}
-                        {error && (
-                            <p className="text-xs text-red-400 bg-red-950/30 border border-red-900/40 rounded-lg px-3 py-2">
-                                {error}
+                        {/* Body */}
+                        <div className="px-8 py-6 space-y-4">
+                            <h3
+                                id="confirm-title"
+                                className="text-lg font-black uppercase tracking-tighter text-white leading-none"
+                            >
+                                {pendingAction.label}
+                            </h3>
+                            <p className="text-xs text-white/50 leading-relaxed font-medium">
+                                {pendingAction.description}
                             </p>
-                        )}
 
-                        {/* Acciones */}
-                        <div className="flex gap-3 justify-end">
+                            {error && (
+                                <div className="border-l-4 pl-3 py-1" style={{ borderColor: "#FF3000" }}>
+                                    <p className="text-[10px] font-medium text-white/70">{error}</p>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Footer actions */}
+                        <div className="border-t border-white/10 px-8 py-5 flex items-center justify-end gap-3">
                             <button
                                 onClick={handleCancel}
                                 disabled={loading}
-                                className="px-4 py-2 text-sm font-medium text-zinc-300 bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors disabled:opacity-50"
+                                className="px-5 py-2.5 text-[9px] font-black uppercase tracking-[0.2em] border border-white/15 text-white/40 hover:text-white hover:border-white/30 disabled:opacity-40 transition-colors duration-150"
                             >
                                 Cancelar
                             </button>
                             <button
+                                id="confirm-action-btn"
                                 onClick={handleConfirm}
                                 disabled={loading}
-                                className={`px-4 py-2 text-sm font-medium text-white rounded-lg transition-all duration-200 shadow-lg disabled:opacity-50 ${pendingAction.confirmClass}`}
+                                className={`px-5 py-2.5 text-[9px] font-black uppercase tracking-[0.2em] disabled:opacity-40 transition-colors duration-150 ${pendingAction.confirmStyle}`}
                             >
                                 {loading ? (
                                     <span className="flex items-center gap-2">
-                                        <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                                        <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24" fill="none">
                                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                                         </svg>

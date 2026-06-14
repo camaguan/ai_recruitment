@@ -15,96 +15,134 @@ export default function SettingsPage() {
     };
 
     return (
-        <div className="p-8 max-w-4xl mx-auto space-y-8">
-            {/* Cabecera */}
-            <div>
-                <h1 className="text-3xl font-bold text-zinc-50">Configuración</h1>
-                <p className="text-zinc-400 mt-2">Ajusta los parámetros del motor de evaluación IA y preferencias del sistema.</p>
+        <div className="p-8 max-w-4xl mx-auto space-y-10">
+
+            {/* ── Header ── */}
+            <div className="border-b border-white/10 pb-6">
+                <span
+                    className="text-[9px] font-black uppercase tracking-[0.25em] block mb-2"
+                    style={{ color: "#FF3000" }}
+                >
+                    01. Sistema
+                </span>
+                <h1 className="text-4xl font-black uppercase tracking-tighter text-white leading-none">
+                    Configuración
+                </h1>
+                <p className="text-xs text-white/35 mt-3 font-medium">
+                    Ajusta los parámetros del motor de evaluación y preferencias del sistema.
+                </p>
             </div>
 
-            <form onSubmit={handleSave} className="space-y-6">
-                {/* Bloque Evaluación IA */}
-                <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-xl space-y-5">
-                    <h2 className="text-xl font-bold text-zinc-100 flex items-center gap-2">
-                        🧠 Motor de Evaluación IA
-                    </h2>
-                    
-                    <div className="space-y-4">
-                        <div>
-                            <label className="block text-sm font-medium text-zinc-300">
+            <form onSubmit={handleSave} className="space-y-8">
+
+                {/* ── Evaluation engine block ── */}
+                <div className="border border-white/10">
+                    <div className="border-b border-white/10 px-6 py-4">
+                        <h2 className="text-[9px] font-black uppercase tracking-[0.2em] text-white/40">
+                            Motor de Evaluación
+                        </h2>
+                    </div>
+
+                    <div className="divide-y divide-white/[0.06]">
+                        {/* Model select */}
+                        <div className="px-6 py-5 space-y-2">
+                            <label className="block text-[9px] font-black uppercase tracking-[0.2em] text-white/35">
                                 Modelo de Lenguaje Utilizado
                             </label>
-                            <select 
-                                value={selectedModel} 
+                            <select
+                                value={selectedModel}
                                 onChange={(e) => setSelectedModel(e.target.value)}
-                                className="mt-2 block w-full rounded-md border border-zinc-700 bg-zinc-800 text-zinc-100 p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full border-b border-white/20 bg-transparent py-2.5 text-sm text-white focus:outline-none focus:border-[#FF3000] transition-colors duration-150 appearance-none cursor-pointer"
                             >
-                                <option value="gemini-1.5-pro">Gemini 1.5 Pro (Recomendado)</option>
-                                <option value="gemini-1.5-flash">Gemini 1.5 Flash (Más rápido)</option>
-                                <option value="claude-3-5-sonnet">Claude 3.5 Sonnet</option>
+                                <option value="gemini-1.5-pro"   className="bg-[#0A0A0A] text-white">Gemini 1.5 Pro (Recomendado)</option>
+                                <option value="gemini-1.5-flash" className="bg-[#0A0A0A] text-white">Gemini 1.5 Flash (Más rápido)</option>
+                                <option value="claude-3-5-sonnet" className="bg-[#0A0A0A] text-white">Claude 3.5 Sonnet</option>
                             </select>
-                            <p className="text-xs text-zinc-500 mt-1.5">
-                                Afecta directamente la calidad del análisis de CV y el cálculo del Match Score.
+                            <p className="text-[9px] text-white/25 font-medium leading-relaxed">
+                                Afecta la calidad del análisis de CV y el cálculo del Match Score.
                             </p>
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-zinc-305">
-                                Score Mínimo Recomendado ({minScore}/100)
-                            </label>
-                            <input 
-                                type="range" 
-                                min="0" 
-                                max="100" 
-                                value={minScore} 
+                        {/* Score range */}
+                        <div className="px-6 py-5 space-y-4">
+                            <div className="flex items-center justify-between">
+                                <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/35">
+                                    Score Mínimo Recomendado
+                                </label>
+                                <span
+                                    className="text-2xl font-black tabular-nums leading-none"
+                                    style={{ color: "#FF3000" }}
+                                >
+                                    {minScore}
+                                    <span className="text-sm text-white/25 ml-0.5">/100</span>
+                                </span>
+                            </div>
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                value={minScore}
                                 onChange={(e) => setMinScore(Number(e.target.value))}
-                                className="w-full mt-3 h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                                className="w-full h-0.5 bg-white/15 appearance-none cursor-pointer accent-[#FF3000]"
                             />
-                            <div className="flex justify-between text-xs text-zinc-500 mt-1">
-                                <span>Filtrado blando (0)</span>
+                            <div className="flex justify-between text-[9px] font-black uppercase tracking-[0.15em] text-white/20">
+                                <span>Filtrado suave (0)</span>
                                 <span>Filtrado estricto (100)</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Bloque Notificaciones */}
-                <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-xl space-y-5">
-                    <h2 className="text-xl font-bold text-zinc-100 flex items-center gap-2">
-                        ✉️ Alertas y Notificaciones
-                    </h2>
+                {/* ── Notifications block ── */}
+                <div className="border border-white/10">
+                    <div className="border-b border-white/10 px-6 py-4">
+                        <h2 className="text-[9px] font-black uppercase tracking-[0.2em] text-white/40">
+                            Alertas y Notificaciones
+                        </h2>
+                    </div>
 
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <span className="block text-sm font-medium text-zinc-200">Notificaciones de nuevos candidatos</span>
-                            <span className="block text-xs text-zinc-500 mt-0.5">Enviar un correo electrónico diario con el resumen de CVs recibidos.</span>
+                    <div className="px-6 py-5 flex items-center justify-between gap-8">
+                        <div className="space-y-1">
+                            <p className="text-sm font-bold text-white">Notificaciones de nuevos candidatos</p>
+                            <p className="text-[10px] text-white/30 font-medium">
+                                Enviar un correo con el resumen diario de CVs recibidos.
+                            </p>
                         </div>
+
+                        {/* Swiss toggle — checkbox style */}
                         <button
                             type="button"
+                            id="toggle-notifications"
                             onClick={() => setNotifyOnApply(!notifyOnApply)}
-                            className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                                notifyOnApply ? "bg-blue-600" : "bg-zinc-700"
+                            aria-pressed={notifyOnApply}
+                            className={`shrink-0 w-12 h-6 border-2 relative transition-colors duration-150 ${
+                                notifyOnApply ? "border-[#FF3000] bg-[#FF3000]" : "border-white/20 bg-transparent"
                             }`}
                         >
                             <span
-                                className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-                                    notifyOnApply ? "translate-x-5" : "translate-x-0"
+                                className={`absolute top-0 bottom-0 w-5 h-full flex items-center justify-center transition-all duration-150 ${
+                                    notifyOnApply ? "left-[calc(100%-20px)]" : "left-0"
                                 }`}
-                            />
+                            >
+                                <span className={`w-3 h-3 ${notifyOnApply ? "bg-white" : "bg-white/30"}`} />
+                            </span>
                         </button>
                     </div>
                 </div>
 
-                {/* Acciones */}
-                <div className="flex items-center justify-end gap-4">
+                {/* ── Save ── */}
+                <div className="flex items-center justify-end gap-6 pt-2">
                     {saved && (
-                        <span className="text-sm text-green-400 animate-fade-in">
-                            ✓ Configuración guardada correctamente
+                        <span
+                            className="text-[9px] font-black uppercase tracking-[0.2em]"
+                            style={{ color: "#FF3000" }}
+                        >
+                            Cambios guardados correctamente.
                         </span>
                     )}
                     <button
                         type="submit"
-                        className="py-2.5 px-5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold shadow-md transition-colors"
+                        className="px-8 py-3.5 bg-white text-black text-[9px] font-black uppercase tracking-[0.2em] hover:bg-[#FF3000] hover:text-white transition-colors duration-150"
                     >
                         Guardar Cambios
                     </button>
