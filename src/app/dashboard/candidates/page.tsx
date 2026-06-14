@@ -7,22 +7,24 @@ const supabase = createClient(
 );
 
 const STAGE_LABELS: Record<string, string> = {
-    cv_received:  "Recibido",
-    ai_parsing:   "Procesando",
+    cv_received: "Recibido",
+    ai_parsing: "Procesando",
     human_review: "Revisión",
-    interview:    "Entrevista",
-    rejected:     "Descartado",
-    hired:        "Contratado",
+    interview: "Entrevista",
+    rejected: "Descartado",
+    hired: "Contratado",
 };
 
 const STAGE_COLOR: Record<string, string> = {
-    cv_received:  "border-white/20 text-white/40",
-    ai_parsing:   "border-blue-400/50 text-blue-400",
+    cv_received: "border-white/20 text-white/40",
+    ai_parsing: "border-blue-400/50 text-blue-400",
     human_review: "border-yellow-400/50 text-yellow-400",
-    interview:    "border-green-400/50 text-green-400",
-    rejected:     "border-red-500/50 text-red-400",
-    hired:        "border-emerald-400/50 text-emerald-400",
+    interview: "border-green-400/50 text-green-400",
+    rejected: "border-red-500/50 text-red-400",
+    hired: "border-emerald-400/50 text-emerald-400",
 };
+
+export const dynamic = "force-dynamic";
 
 export default async function CandidatesDashboard() {
     const { data: applications, error } = await supabase

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase/client";
 import { toast } from "sonner";
 
+export const dynamic = "force-dynamic";
+
 export default function JobsDashboard() {
     const [jobs, setJobs] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -89,10 +91,10 @@ export default function JobsDashboard() {
                                     onChange={(e) => setSeniority(e.target.value)}
                                     className="w-full border-b border-white/20 bg-transparent py-2.5 text-sm text-white focus:outline-none focus:border-[#FF3000] transition-colors duration-150 appearance-none cursor-pointer"
                                 >
-                                    <option value="Junior"    className="bg-[#0A0A0A] text-white">Junior</option>
+                                    <option value="Junior" className="bg-[#0A0A0A] text-white">Junior</option>
                                     <option value="Mid-Level" className="bg-[#0A0A0A] text-white">Mid-Level</option>
-                                    <option value="Senior"    className="bg-[#0A0A0A] text-white">Senior</option>
-                                    <option value="Lead"      className="bg-[#0A0A0A] text-white">Lead</option>
+                                    <option value="Senior" className="bg-[#0A0A0A] text-white">Senior</option>
+                                    <option value="Lead" className="bg-[#0A0A0A] text-white">Lead</option>
                                 </select>
                             </div>
 
@@ -166,11 +168,10 @@ export default function JobsDashboard() {
                                         {job.description}
                                     </p>
                                     <div className="mt-3 flex items-center gap-3">
-                                        <span className={`text-[8px] font-black uppercase tracking-wider px-1.5 py-0.5 border ${
-                                            job.status === "open"
-                                                ? "border-green-500/40 text-green-400"
-                                                : "border-white/20 text-white/30"
-                                        }`}>
+                                        <span className={`text-[8px] font-black uppercase tracking-wider px-1.5 py-0.5 border ${job.status === "open"
+                                            ? "border-green-500/40 text-green-400"
+                                            : "border-white/20 text-white/30"
+                                            }`}>
                                             {job.status === "open" ? "Abierta" : "Cerrada"}
                                         </span>
                                     </div>
