@@ -25,6 +25,29 @@ export default function CandidateActions({ applicationId, currentStage }: Candid
 
     if (currentStage === "rejected" || currentStage === "hired") return null;
 
+    const handleAiAnalysis = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const res = await fetch("/api/evaluate-cv", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ applicationId }),
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                throw new Error(data.error || "Ocurrió un error al analizar con la IA.");
+            }
+            router.refresh();
+        } catch (err: any) {
+            setError(err.message || "Error al realizar la evaluación.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const requestAction = (stage: string) => {
         if (stage === "rejected") {
             setPendingAction({
@@ -72,9 +95,22 @@ export default function CandidateActions({ applicationId, currentStage }: Candid
     };
 
     return (
-        <>
+        <div className="space-y-4">
+            {error && !pendingAction && (
+                <div className="border-l-4 pl-3 py-1" style={{ borderColor: "#FF3000" }}>
+                    <p className="text-[10px] font-medium text-white/70">{error}</p>
+                </div>
+            )}
             {/* ── Action buttons ── */}
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-wrap">
+                <button
+                    id="btn-evaluate-ai"
+                    onClick={handleAiAnalysis}
+                    disabled={loading}
+                    className="px-5 py-2.5 text-[9px] font-black uppercase tracking-[0.2em] bg-[#FF3000] text-white hover:bg-red-700 disabled:opacity-40 transition-colors duration-150"
+                >
+                    {loading ? "Analizando..." : "Analizar con IA"}
+                </button>
                 <button
                     id="btn-discard"
                     onClick={() => requestAction("rejected")}
@@ -175,6 +211,6 @@ export default function CandidateActions({ applicationId, currentStage }: Candid
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 }
