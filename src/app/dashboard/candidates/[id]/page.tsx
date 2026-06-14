@@ -54,7 +54,7 @@ export default async function CandidateDetail({ params }: { params: Promise<{ id
     const job       = (Array.isArray(app.job) ? app.job[0] : app.job) as any;
 
     return (
-        <div className="p-8 max-w-7xl mx-auto space-y-10">
+        <div className="p-4 sm:p-8 max-w-7xl mx-auto space-y-10">
 
             {/* ── Header ── */}
             <div className="border-b border-white/10 pb-6">
@@ -73,7 +73,7 @@ export default async function CandidateDetail({ params }: { params: Promise<{ id
                         >
                             Perfil de Candidato
                         </span>
-                        <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white leading-none">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tighter text-white leading-none">
                             {candidate?.name}
                         </h1>
                         <div className="flex flex-wrap items-center gap-3 mt-4">
@@ -88,9 +88,9 @@ export default async function CandidateDetail({ params }: { params: Promise<{ id
 
                     {/* Score */}
                     {app.score != null && (
-                        <div className="border border-white/15 px-8 py-5 text-center shrink-0">
+                        <div className="border border-white/15 px-6 py-4 sm:px-8 sm:py-5 text-center shrink-0 self-start">
                             <span
-                                className="block text-5xl font-black tabular-nums leading-none"
+                                className="block text-4xl sm:text-5xl font-black tabular-nums leading-none"
                                 style={{ color: "#FF3000" }}
                             >
                                 {app.score}

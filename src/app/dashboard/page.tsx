@@ -56,7 +56,7 @@ export default async function DashboardOverview() {
         .limit(5);
 
     return (
-        <div className="p-8 max-w-7xl mx-auto space-y-12">
+        <div className="p-4 sm:p-8 max-w-7xl mx-auto space-y-12">
 
             {/* ── Header ── */}
             <div className="border-b border-white/10 pb-6">
@@ -66,7 +66,7 @@ export default async function DashboardOverview() {
                 >
                     01. Resumen
                 </span>
-                <h1 className="text-4xl font-black uppercase tracking-tighter text-white leading-none">
+                <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter text-white leading-none">
                     Panel de Reclutamiento
                 </h1>
             </div>
@@ -80,7 +80,7 @@ export default async function DashboardOverview() {
                 ].map((stat) => (
                     <div
                         key={stat.label}
-                        className="border-r border-b border-white/10 p-8 hover:bg-white/[0.025] transition-colors group"
+                        className="border-r border-b border-white/10 p-6 sm:p-8 hover:bg-white/[0.025] transition-colors group"
                     >
                         <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/35 mb-4">
                             {stat.label}

@@ -44,26 +44,26 @@ export default function JobsDashboard() {
     };
 
     return (
-        <div className="p-8 max-w-7xl mx-auto">
+        <div className="p-4 sm:p-8 max-w-7xl mx-auto">
 
             {/* ── Page header ── */}
-            <div className="border-b border-white/10 pb-6 mb-10">
+            <div className="border-b border-white/10 pb-6 mb-8 md:mb-10">
                 <span
                     className="text-[9px] font-black uppercase tracking-[0.25em] block mb-2"
                     style={{ color: "#FF3000" }}
                 >
                     01. Gestión
                 </span>
-                <h1 className="text-4xl font-black uppercase tracking-tighter text-white leading-none">
+                <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter text-white leading-none">
                     Vacantes
                 </h1>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
 
                 {/* ── Form column ── */}
                 <div className="md:col-span-1">
-                    <div className="border border-white/15 p-8 space-y-6 h-fit">
+                    <div className="border border-white/15 p-6 sm:p-8 space-y-6 h-fit">
                         <h2 className="text-sm font-black uppercase tracking-[0.15em] text-white">
                             Nueva Vacante
                         </h2>

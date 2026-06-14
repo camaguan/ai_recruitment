@@ -30,14 +30,15 @@ export default function Home() {
         <div className="min-h-screen bg-white text-black flex flex-col">
 
             {/* ── Header ── */}
-            <header className="sticky top-0 z-50 bg-white border-b-2 border-black px-6 py-4">
+            <header className="sticky top-0 z-50 bg-white border-b-2 border-black px-4 py-3 md:px-6 md:py-4">
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
-                    <Logo iconSize={32} textSize="text-2xl" variant="light" />
+                    <Logo iconSize={28} textSize="text-xl md:text-2xl" variant="light" />
                     <Link
                         href="/login"
-                        className="px-5 py-2.5 text-[10px] font-black uppercase tracking-widest border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-150"
+                        className="px-3 py-2 md:px-5 md:py-2.5 text-[9px] md:text-[10px] font-black uppercase tracking-widest border-2 border-black text-black hover:bg-black hover:text-white transition-colors duration-150 shrink-0"
                     >
-                        Ingresar como Reclutador
+                        <span className="hidden sm:inline">Ingresar como Reclutador</span>
+                        <span className="sm:hidden">Ingresar</span>
                     </Link>
                 </div>
             </header>
@@ -121,9 +122,9 @@ export default function Home() {
                         ].map((f, i) => (
                             <div
                                 key={f.num}
-                                className={`p-10 group hover:bg-black transition-colors duration-150 cursor-default ${
-                                    i < 2 ? "border-r-2 border-black" : ""
-                                }`}
+                                className={`p-8 md:p-10 group hover:bg-black transition-colors duration-150 cursor-default border-b-2 md:border-b-0 border-black ${
+                                    i < 2 ? "md:border-r-2" : ""
+                                } last:border-b-0`}
                             >
                                 <span
                                     className="text-[10px] font-black uppercase tracking-[0.2em] group-hover:text-[#FF3000] transition-colors"
