@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AIRecruit",
-  description: "AI-powered recruitment platform",
+  title: "e-Selector",
+  description: "Plataforma de reclutamiento y selección de personal",
 };
 
 export default function RootLayout({

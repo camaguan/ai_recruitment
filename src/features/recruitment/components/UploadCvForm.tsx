@@ -150,7 +150,7 @@ export default function UploadCvForm({ jobId }: UploadCvFormProps) {
                 <div className="text-4xl text-emerald-400">🎉</div>
                 <h3 className="font-bold text-xl text-white">¡Postulación exitosa!</h3>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                    Hemos recibido tus datos y tu CV. Nuestro motor de IA analizará tu perfil y los reclutadores se comunicarán contigo a la brevedad.
+                    Hemos recibido tus datos y tu CV. El equipo de reclutamiento revisará tu perfil y se comunicará contigo a la brevedad.
                 </p>
                 <div className="pt-4">
                     <Link 

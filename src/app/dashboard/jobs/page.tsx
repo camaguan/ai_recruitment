@@ -80,13 +80,8 @@ export default function JobsDashboard() {
                                             {job.seniority_required}
                                         </span>
                                     </div>
-                                    <span className="text-xs text-zinc-500">ID: {job.id.split('-')[0]}...</span>
                                 </div>
                                 <p className="mt-3 text-sm text-zinc-300 line-clamp-2">{job.description}</p>
-                                {/* Nota para testeo: Necesitas este ID para pasarle al componente UploadCvForm */}
-                                <div className="mt-4 pt-3 border-t border-zinc-800 text-xs font-mono text-zinc-400">
-                                    jobId para el form: {job.id}
-                                </div>
                             </div>
                         ))}
                     </div>

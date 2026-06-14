@@ -37,11 +37,11 @@ export default function Home() {
             <header className="sticky top-0 z-50 backdrop-blur-md bg-zinc-950/80 border-b border-zinc-900/80 px-6 py-4">
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
                     <Logo iconSize={32} textSize="text-2xl" />
-                    <Link 
+                    <Link
                         href="/login"
                         className="px-4 py-2 text-sm font-medium border border-zinc-800 rounded-lg hover:bg-zinc-900 hover:text-white transition-all duration-200"
                     >
-                        Ingreso Reclutador
+                        Ingresar como Reclutador
                     </Link>
                 </div>
             </header>
@@ -50,16 +50,16 @@ export default function Home() {
             <section className="relative overflow-hidden py-24 px-6 border-b border-zinc-900 bg-radial-[circle_at_top] from-blue-950/25 via-transparent to-transparent">
                 <div className="max-w-4xl mx-auto text-center space-y-8">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-400 text-xs font-semibold uppercase tracking-wider">
-                        🤖 Reclutamiento Automatizado de Próxima Generación
+                        🎯 Selección de Talento de Próxima Generación
                     </div>
                     <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
-                        Encuentra tu próximo desafío impulsado por IA
+                        Encuentra tu próximo desafío con e-Selector
                     </h1>
                     <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto font-light leading-relaxed">
-                        AI Recruit agiliza los procesos de contratación. Analizamos tu currículum de forma inteligente con IA para vincularte a la vacante ideal en minutos.
+                        e-Selector agiliza los procesos de contratación. Analizamos tu currículum para vincularte a la vacante ideal en minutos, con rapidez y objetividad.
                     </p>
                     <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <a 
+                        <a
                             href="#vacancies"
                             onClick={handleScrollToVacancies}
                             className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/10 active:scale-[0.98] transition-all duration-200 cursor-pointer"
@@ -77,15 +77,15 @@ export default function Home() {
                         <div className="text-3xl text-blue-500">⚡</div>
                         <h3 className="text-xl font-bold text-white">Análisis en Segundos</h3>
                         <p className="text-sm text-zinc-400 leading-relaxed">
-                            Procesamiento inteligente mediante IA que extrae tus habilidades, experiencia y fortalezas clave directamente de tu archivo PDF en tiempo real.
+                            Extracción automática de habilidades, experiencia y fortalezas clave directamente de tu archivo PDF en tiempo real, sin formularios complicados.
                         </p>
                     </div>
 
                     <div className="bg-zinc-900/30 p-8 rounded-2xl border border-zinc-900 space-y-4">
                         <div className="text-3xl text-blue-500">🎯</div>
-                        <h3 className="text-xl font-bold text-white">Match Inteligente</h3>
+                        <h3 className="text-xl font-bold text-white">Match Objetivo</h3>
                         <p className="text-sm text-zinc-400 leading-relaxed">
-                            Calculamos un índice de compatibilidad objetivo con los requerimientos de la vacante, facilitando el trabajo de los reclutadores y garantizando justicia.
+                            Calculamos un índice de compatibilidad objetivo con los requerimientos de la vacante, facilitando el trabajo de los reclutadores y garantizando transparencia.
                         </p>
                     </div>
 
@@ -93,7 +93,7 @@ export default function Home() {
                         <div className="text-3xl text-blue-500">⚖️</div>
                         <h3 className="text-xl font-bold text-white">Decisión Humana</h3>
                         <p className="text-sm text-zinc-400 leading-relaxed">
-                            Aunque la IA ayuda a calificar y resumir perfiles, todas las contrataciones son validadas por nuestro equipo de reclutamiento operativo (Human-in-the-loop).
+                            e-Selector entrega información organizada y comparativa, pero todas las contrataciones son validadas por el equipo de reclutamiento (Human-in-the-loop).
                         </p>
                     </div>
                 </div>
@@ -121,8 +121,8 @@ export default function Home() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {jobs.map((job) => (
-                            <div 
-                                key={job.id} 
+                            <div
+                                key={job.id}
                                 className="group relative bg-zinc-900/50 p-6 rounded-2xl border border-zinc-900 shadow-xl flex flex-col justify-between transition-all duration-300 hover:border-zinc-800 hover:-translate-y-1 hover:bg-zinc-900"
                             >
                                 <div className="space-y-4">
@@ -140,7 +140,7 @@ export default function Home() {
                                 </div>
                                 <div className="mt-6 pt-4 border-t border-zinc-800/80 flex items-center justify-between">
                                     <span className="text-xs text-zinc-650">Vacante Abierta</span>
-                                    <Link 
+                                    <Link
                                         href={`/apply/${job.id}`}
                                         className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors cursor-pointer"
                                     >
@@ -156,8 +156,8 @@ export default function Home() {
             {/* Footer */}
             <footer className="border-t border-zinc-900 py-10 px-6">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-600">
-                    <p>© {new Date().getFullYear()} AI Recruit. Todos los derechos reservados.</p>
-                    <p>Potenciado por Next.js, Supabase y Gemini AI</p>
+                    <p>© {new Date().getFullYear()} e-Selector. Todos los derechos reservados.</p>
+                    <p>Potenciado por Next.js y Supabase</p>
                 </div>
             </footer>
         </div>

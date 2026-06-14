@@ -39,7 +39,7 @@ export default function LoginPage() {
             <div className="w-full max-w-md bg-zinc-900 p-8 rounded-2xl border border-zinc-800 shadow-2xl space-y-6 transition-all duration-300 hover:border-zinc-700">
                 <div className="text-center space-y-2">
                     <h2 className="text-3xl font-extrabold tracking-tight text-white">
-                        AI<span className="text-blue-500">Recruit</span>
+                        e-<span className="text-blue-500">Selector</span>
                     </h2>
                     <p className="text-sm text-zinc-400">Portal de Reclutadores y Analistas</p>
                 </div>

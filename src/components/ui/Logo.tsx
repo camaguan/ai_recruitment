@@ -37,7 +37,7 @@ export default function Logo({ className = "", iconSize = 28, textSize = "text-x
                 <div className="absolute inset-0 bg-blue-500/20 blur-md rounded-full -z-10 animate-ping opacity-30"></div>
             </div>
             <span className={`font-bold tracking-tight text-white ${textSize}`}>
-                AI<span className="text-blue-500">Recruit</span>
+                e-<span className="text-blue-500">Selector</span>
             </span>
         </div>
     );
