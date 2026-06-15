@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
         const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
         const promptText = `Analiza el CV del candidato para la vacante de: "${job?.title || "Posición General"}".
-        Extrae un resumen profesional, determina su seniority/clasificación, el nivel de riesgo del perfil y sugerencias/observaciones.
+        Extrae un resumen profesional, determina su seniority/clasificación, el nivel de compatibilidad del perfil y sugerencias/observaciones.
         Calcula también un puntaje de coincidencia (score) del 0 al 100 en base a qué tan bien se alinea el CV con el rol.`;
 
         const geminiRequestBody = {

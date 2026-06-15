@@ -8,21 +8,21 @@ const supabase = createClient(
 );
 
 const STAGE_LABELS: Record<string, string> = {
-    cv_received:  "Recibido",
-    ai_parsing:   "Procesando",
+    cv_received: "Recibido",
+    ai_parsing: "Procesando",
     human_review: "En Revisión",
-    interview:    "Entrevista",
-    rejected:     "Descartado",
-    hired:        "Contratado",
+    interview: "Entrevista",
+    rejected: "Descartado",
+    hired: "Contratado",
 };
 
 const STAGE_COLOR: Record<string, string> = {
-    cv_received:  "border-white/20 text-white/40",
-    ai_parsing:   "border-blue-400/50 text-blue-400",
+    cv_received: "border-white/20 text-white/40",
+    ai_parsing: "border-blue-400/50 text-blue-400",
     human_review: "border-yellow-400/50 text-yellow-400",
-    interview:    "border-green-400/50 text-green-400",
-    rejected:     "border-red-500/50 text-red-400",
-    hired:        "border-emerald-400/50 text-emerald-400",
+    interview: "border-green-400/50 text-green-400",
+    rejected: "border-red-500/50 text-red-400",
+    hired: "border-emerald-400/50 text-emerald-400",
 };
 
 export default async function CandidateDetail({ params }: { params: Promise<{ id: string }> }) {
@@ -49,9 +49,9 @@ export default async function CandidateDetail({ params }: { params: Promise<{ id
         );
     }
 
-    const aiData    = app.evaluations?.[0]?.json_result;
+    const aiData = app.evaluations?.[0]?.json_result;
     const candidate = (Array.isArray(app.candidate) ? app.candidate[0] : app.candidate) as any;
-    const job       = (Array.isArray(app.job) ? app.job[0] : app.job) as any;
+    const job = (Array.isArray(app.job) ? app.job[0] : app.job) as any;
 
     return (
         <div className="p-4 sm:p-8 max-w-7xl mx-auto space-y-10">
@@ -143,13 +143,12 @@ export default async function CandidateDetail({ params }: { params: Promise<{ id
                                     </div>
                                     <div className="px-6 py-5">
                                         <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 mb-2">
-                                            Nivel de Riesgo
+                                            Nivel de compatibilidad
                                         </p>
-                                        <p className={`text-sm font-black uppercase tracking-tight ${
-                                            aiData.riskLevel === "High"   ? "text-red-400"    :
-                                            aiData.riskLevel === "Medium" ? "text-yellow-400" :
-                                            "text-green-400"
-                                        }`}>
+                                        <p className={`text-sm font-black uppercase tracking-tight ${aiData.riskLevel === "High" ? "text-red-400" :
+                                                aiData.riskLevel === "Medium" ? "text-yellow-400" :
+                                                    "text-green-400"
+                                            }`}>
                                             {aiData.riskLevel}
                                         </p>
                                     </div>
