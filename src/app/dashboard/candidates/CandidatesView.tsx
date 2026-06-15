@@ -18,7 +18,7 @@ interface Job {
 }
 
 interface Props {
-    applications: Application[];
+    applications: any[];
     jobs: Job[];
 }
 
@@ -40,12 +40,22 @@ const STAGE_COLOR: Record<string, string> = {
     hired: "border-emerald-400/50 text-emerald-400",
 };
 
-export default function CandidatesView({ applications = [], jobs = [] }: Props) {
+function normalize(raw: any[]): Application[] {
+    return (raw ?? []).map((a) => ({
+        ...a,
+        candidate: Array.isArray(a.candidate) ? a.candidate[0] : a.candidate,
+        job: Array.isArray(a.job) ? a.job[0] : a.job,
+    }));
+}
+
+export default function CandidatesView({ applications: rawApplications = [], jobs = [] }: Props) {
     const [selectedJobId, setSelectedJobId] = useState<string>("all");
     const [sortByScore, setSortByScore] = useState(false);
 
+    const applications = useMemo(() => normalize(rawApplications), [rawApplications]);
+
     const filtered = useMemo(() => {
-        let list = selectedJobId === "all"
+        let list: Application[] = selectedJobId === "all"
             ? applications
             : applications.filter(a => a.job?.id === selectedJobId);
 
@@ -87,40 +97,35 @@ export default function CandidatesView({ applications = [], jobs = [] }: Props) 
 
             {/* ── Filters ── */}
             <div className="flex flex-wrap items-center gap-4 mb-8">
-                {/* Job filter */}
-                <div className="flex items-center gap-3">
-                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/35">
-                        Vacante
-                    </span>
-                    <div className="flex flex-wrap gap-2">
+                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/35">
+                    Vacante
+                </span>
+                <div className="flex flex-wrap gap-2">
+                    <button
+                        onClick={() => setSelectedJobId("all")}
+                        className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.15em] border transition-colors duration-150 ${selectedJobId === "all"
+                                ? "border-[#FF3000] text-[#FF3000]"
+                                : "border-white/15 text-white/35 hover:border-white/30 hover:text-white/60"
+                            }`}
+                    >
+                        Todas
+                    </button>
+                    {jobs.map(job => (
                         <button
-                            onClick={() => setSelectedJobId("all")}
-                            className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.15em] border transition-colors duration-150 ${selectedJobId === "all"
+                            key={job.id}
+                            onClick={() => setSelectedJobId(job.id)}
+                            className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.15em] border transition-colors duration-150 ${selectedJobId === job.id
                                     ? "border-[#FF3000] text-[#FF3000]"
                                     : "border-white/15 text-white/35 hover:border-white/30 hover:text-white/60"
                                 }`}
                         >
-                            Todas
+                            {job.title}
                         </button>
-                        {jobs.map(job => (
-                            <button
-                                key={job.id}
-                                onClick={() => setSelectedJobId(job.id)}
-                                className={`px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.15em] border transition-colors duration-150 ${selectedJobId === job.id
-                                        ? "border-[#FF3000] text-[#FF3000]"
-                                        : "border-white/15 text-white/35 hover:border-white/30 hover:text-white/60"
-                                    }`}
-                            >
-                                {job.title}
-                            </button>
-                        ))}
-                    </div>
+                    ))}
                 </div>
 
-                {/* Divider */}
                 <div className="hidden sm:block w-px h-4 bg-white/10" />
 
-                {/* Sort toggle */}
                 <button
                     onClick={() => setSortByScore(s => !s)}
                     className={`flex items-center gap-2 px-3 py-1.5 text-[9px] font-black uppercase tracking-[0.15em] border transition-colors duration-150 ${sortByScore
@@ -132,7 +137,7 @@ export default function CandidatesView({ applications = [], jobs = [] }: Props) 
                 </button>
             </div>
 
-            {/* ── Ranking header (when a job is selected and sorted) ── */}
+            {/* ── Ranking label ── */}
             {selectedJobId !== "all" && sortByScore && filtered.length > 0 && (
                 <div className="border-l-2 pl-4 mb-6" style={{ borderColor: "#FF3000" }}>
                     <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/40">
@@ -159,8 +164,8 @@ export default function CandidatesView({ applications = [], jobs = [] }: Props) 
                                     </span>
                                 )}
                                 <div>
-                                    <p className="text-sm font-bold text-white">{app.candidate.name}</p>
-                                    <p className="text-[10px] text-white/35 mt-0.5 font-medium">{app.candidate.email}</p>
+                                    <p className="text-sm font-bold text-white">{app.candidate?.name}</p>
+                                    <p className="text-[10px] text-white/35 mt-0.5 font-medium">{app.candidate?.email}</p>
                                 </div>
                             </div>
                             {app.score != null ? (
@@ -174,7 +179,7 @@ export default function CandidatesView({ applications = [], jobs = [] }: Props) 
                         <div className="flex items-center justify-between pt-3 border-t border-white/5">
                             <div className="flex flex-col gap-1.5">
                                 {selectedJobId === "all" && (
-                                    <span className="text-xs text-white/50 font-medium">{app.job.title}</span>
+                                    <span className="text-xs text-white/50 font-medium">{app.job?.title}</span>
                                 )}
                                 <span className={`self-start text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 border ${STAGE_COLOR[app.stage] || "border-white/20 text-white/35"}`}>
                                     {STAGE_LABELS[app.stage] || app.stage}
@@ -237,22 +242,20 @@ export default function CandidatesView({ applications = [], jobs = [] }: Props) 
                                 {sortByScore && selectedJobId !== "all" && (
                                     <td className="py-4 pr-4">
                                         <span
-                                            className="text-xs font-black tabular-nums"
-                                            style={{ color: i === 0 ? "#FF3000" : undefined }}
+                                            className={`text-xs font-black tabular-nums ${i === 0 ? "" : "text-white/20"}`}
+                                            style={i === 0 ? { color: "#FF3000" } : {}}
                                         >
-                                            <span className={i > 0 ? "text-white/20" : ""}>
-                                                {i === 0 ? "◆" : `${i + 1}`}
-                                            </span>
+                                            {i === 0 ? "◆" : `${i + 1}`}
                                         </span>
                                     </td>
                                 )}
                                 <td className="py-4 pr-6">
-                                    <p className="text-sm font-bold text-white">{app.candidate.name}</p>
-                                    <p className="text-[10px] text-white/35 mt-0.5 font-medium">{app.candidate.email}</p>
+                                    <p className="text-sm font-bold text-white">{app.candidate?.name}</p>
+                                    <p className="text-[10px] text-white/35 mt-0.5 font-medium">{app.candidate?.email}</p>
                                 </td>
                                 {selectedJobId === "all" && (
                                     <td className="py-4 pr-6">
-                                        <span className="text-xs text-white/50 font-medium">{app.job.title}</span>
+                                        <span className="text-xs text-white/50 font-medium">{app.job?.title}</span>
                                     </td>
                                 )}
                                 <td className="py-4 pr-6">
@@ -266,7 +269,6 @@ export default function CandidatesView({ applications = [], jobs = [] }: Props) 
                                             <span className="text-sm font-black tabular-nums" style={{ color: "#FF3000" }}>
                                                 {app.score}/100
                                             </span>
-                                            {/* Score bar */}
                                             <div className="hidden lg:block w-16 h-1 bg-white/10 rounded-full overflow-hidden">
                                                 <div
                                                     className="h-full rounded-full"
