@@ -1,6 +1,19 @@
-# E-selector
+# e-Selector
+**Intelligent AI-Powered Recruitment & Selection Platform**
 
-An intelligent recruitment platform that automates candidate intake, parses and performs structured evaluations of CVs using artificial intelligence (Gemini API), and displays profiles with their respective Match Scores within a hiring pipeline.
+e-Selector is a modern, high-performance recruitment platform designed to streamline candidate intake and automate resume evaluations. Powered by advanced artificial intelligence, it provides recruiting teams with structured insights, compatibility mapping, and an intuitive dashboard to manage the hiring pipeline.
+
+---
+
+## ✨ Key Features
+
+* **Instant AI Evaluation**: Automatically parses PDF resumes using the Gemini API to extract key professional experience, skills, and insights.
+* **Match Scoring**: Calculates an objective alignment score (0-100) to help recruiters identify top candidates instantly.
+* **Smart Risk & Seniority Profiling**: Categorizes applicants by seniority levels and identifies potential hiring considerations or career gaps.
+* **Unified Recruiter Dashboard**: A clean, minimalist interface for tracking applicants, reviewing AI suggestions, and managing candidate stages in real-time.
+* **Seamless Document Viewer**: View the candidate's original PDF resume side-by-side with AI-generated insights.
+
+---
 
 ## 🛠️ Tech Stack & Dependencies
 
@@ -39,64 +52,48 @@ src/
 
 ---
 
-## 🔄 Workflow & Processing
+## 🔄 How it Works
 
-1. **Application**: The candidate submits their name, email, and CV (PDF) using the public job application form (`/apply/[jobId]`). The PDF is uploaded and stored in the `cv-uploads` bucket within Supabase Storage.
-2. **Registration**: A record is created or updated in the `candidates` table and a corresponding application is linked in the `applications` table with the initial stage set to `cv_received`.
-3. **AI Analysis**: From the candidate detail page, the recruiter clicks the **"Analizar con IA"** (Analyze with AI) button.
-   - A POST request is sent to `/api/evaluate-cv` containing the `applicationId`.
-   - The backend downloads the PDF, converts it to Base64, and passes it to the **Gemini API** along with the job details.
-   - Gemini analyzes the CV and returns a structured JSON response containing:
-     - `summary` (Professional summary)
-     - `classification` (Seniority)
-     - `riskLevel` (Risk Level: Low, Medium, High)
-     - `suggestions` (Observations and alerts)
-     - `score` (Role Match Score from 0 to 100)
-4. **Storage & State Update**: The evaluation result is stored in the `ai_evaluations` table. The application record is updated with the calculated `score` and automatically transitions to the `human_review` stage.
+1. **Candidate Application**: Applicants apply directly through a tailored vacancy page, uploading their resume securely.
+2. **AI-Assisted Analysis**: With a single click, recruiters trigger a deep-analysis of the resume relative to the specific job description.
+3. **Structured Insights**: The platform extracts key insights, flags potential alignment risks, assigns a compatibility score, and advances the candidate in the review pipeline.
+4. **Human Final Review**: Recruiting teams make final decisions equipped with objective metrics, reducing time-to-hire.
 
 ---
 
-## 🗄️ Database Schema (Supabase)
+## 🛠️ Technology Highlights
 
-### `ai_evaluations` Table
-```sql
-create table public.ai_evaluations (
-  id uuid not null default gen_random_uuid (),
-  application_id uuid not null,
-  raw_prompt text not null,
-  model_used text not null,
-  json_result jsonb not null,
-  created_at timestamp with time zone not null default timezone ('utc'::text, now()),
-  constraint ai_evaluations_pkey primary key (id),
-  constraint ai_evaluations_application_id_fkey foreign KEY (application_id) references applications (id) on delete CASCADE
-) TABLESPACE pg_default;
-```
+* **Frontend & Backend**: Next.js (App Router, React 19)
+* **AI Engine**: Google Gemini API (`gemini-2.5-flash` with Structured JSON Schema output)
+* **Database & Document Storage**: Supabase (PostgreSQL & Secure Storage buckets)
+* **Design & UX**: Responsive Swiss-inspired minimalist design
 
 ---
 
-## ⚙️ Environment Variables (`.env`)
+## ⚙️ Setup & Configuration
 
-Ensure you have the following environment variables set up in the root directory for the project to run correctly:
+To run the platform locally, configure the following environment variables in a `.env` file in the root directory:
 
 ```env
-# Supabase Configuration
+# Supabase Services
 NEXT_PUBLIC_SUPABASE_URL=https://<your-project-id>.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>
 SUPABASE_SERVICE_ROLE_KEY=<your-service-role-key>
 
-# Gemini API Configuration
+# Google Gemini API
 GEMINI_API_KEY=<your-gemini-api-key>
 ```
 
----
+### Quick Start
 
-## 🚀 Running Locally
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Install dependencies and start the development server:
+2. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-```bash
-npm install
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser to view and interact with the application.
+3. Open [http://localhost:3000](http://localhost:3000) in your browser.
